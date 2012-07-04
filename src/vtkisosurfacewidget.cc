@@ -71,12 +71,18 @@ void vtkIsosurfaceWidget::RefineConfigurationSurface()
 {
   vtkPoints * const points = contourFilter->GetOutput()->GetPoints();
   const vtkIdType N = points->GetNumberOfPoints();
+//  double max = 0.0;
   for (vtkIdType i = 0; i < N; ++i) {
     double lps[3];
+//    double h;
     points->GetPoint(i, lps);
-    RefineLeanPitchSteer(bike_, 10, lps);
+    RefineLeanPitchSteer(bike_, 7, lps);
     points->SetPoint(i, lps);
+//    h = std::fabs(FrontContactHeight(lps, bike_)); 
+//    if (h > max)
+//      max = h;
   }
+//  std::cout << "Configuration surface updated.  Max height: " << max << std::endl;
 } // RefineConfigurationSurface()
 
 void vtkIsosurfaceWidget::UpdateConfigurationSurface()
