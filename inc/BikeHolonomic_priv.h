@@ -78,8 +78,21 @@ void ReferencePitchAngles(const BikeParameters<T> & bike, T angles[2])
 } // ReferencePitchAngles()
 
 template <class T>
-void RefineLeanPitchSteer(const BikeParameters<T> & b, T LeanPitchSteer[3])
+void RefineLeanPitchSteer(const BikeParameters<T> & b, const int maxIterations,
+                          const T xtol, const T ftol, T LeanPitchSteer[3])
 {
+  T n[3], mag;
+  FrontContactHeightGradient(LeanPitchSteer, b, n);
+  mag = std::sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
+  n[0] = std::fabs(n[0]/mag);
+  n[1] = std::fabs(n[1]/mag);
+  n[2] = std::fabs(n[2]/mag);
+
+  int index = 0;
+  if (n[1] > n[index])
+    index = 1;
+  if (n[2] > n[index])
+    index = 2;
 
 }
 

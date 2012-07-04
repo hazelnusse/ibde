@@ -44,7 +44,7 @@ vtkIsosurfaceWidget::vtkIsosurfaceWidget(BikeParameters<double> & bike, QWidget 
 
   // Create outline
   outlineFilter = vtkSmartPointer<vtkOutlineFilter>::New();
-  outlineFilter->SetInputConnection(sampleFunction->GetOutputPort());
+  outlineFilter->SetInputConnection(contourFilter->GetOutputPort());
 
   // Map it to graphics primitives
   outlineMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
@@ -74,7 +74,7 @@ void vtkIsosurfaceWidget::RefineConfigurationSurface()
   for (vtkIdType i = 0; i < N; ++i) {
     double lps[3];
     points->GetPoint(i, lps);
-    RefineLeanPitchSteer(bike_, lps);
+    RefineLeanPitchSteer(bike_, 5, 1e-16, 1e-16, lps);
     points->SetPoint(i, lps);
   }
 } // RefineConfigurationSurface()
@@ -96,7 +96,7 @@ void vtkIsosurfaceWidget::ComputePitchBounds(double angles[2])
     middle = (referencepitch[0] + referencepitch[1])/2.0;
     delta = referencepitch[1] - referencepitch[0];
     
-    double factor = .55;
+    double factor = .75;
     angles[0] = middle - delta*factor;
     angles[1] = middle + delta*factor;
 } // ComputePitchBounds()
