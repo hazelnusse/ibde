@@ -13,8 +13,8 @@ template <class T>
 void ReferencePitchAngles(const BikeParameters<T> & b, T Angles[2]);
 
 template <class T>
-void RefineLeanPitchSteer(const BikeParameters<T> & b, const int maxIterations,
-                          const T xtol, const T ftol, T LeanPitchSteer[3]);
+void RefineLeanPitchSteer(const BikeParameters<T> & b, int maxIterations,
+                          T LeanPitchSteer[3]);
 
 #include "BikeHolonomic_priv.h"
 

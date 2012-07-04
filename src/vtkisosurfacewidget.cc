@@ -74,7 +74,7 @@ void vtkIsosurfaceWidget::RefineConfigurationSurface()
   for (vtkIdType i = 0; i < N; ++i) {
     double lps[3];
     points->GetPoint(i, lps);
-    RefineLeanPitchSteer(bike_, 5, 1e-16, 1e-16, lps);
+    RefineLeanPitchSteer(bike_, 10, lps);
     points->SetPoint(i, lps);
   }
 } // RefineConfigurationSurface()
@@ -86,6 +86,8 @@ void vtkIsosurfaceWidget::UpdateConfigurationSurface()
   sampleFunction->SetModelBounds(-M_PI/2.0, M_PI/2.0, pitchbounds[0], pitchbounds[1], -M_PI, M_PI);
   sampleFunction->Modified();
   configurationSurface->Modified();
+  contourFilter->Update();// needed?
+  RefineConfigurationSurface();
   renderWindow->Render();
 } // UpdateConfigurationSurface()
 

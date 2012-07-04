@@ -78,8 +78,8 @@ void ReferencePitchAngles(const BikeParameters<T> & bike, T angles[2])
 } // ReferencePitchAngles()
 
 template <class T>
-void RefineLeanPitchSteer(const BikeParameters<T> & b, const int maxIterations,
-                          const T xtol, const T ftol, T LeanPitchSteer[3])
+void RefineLeanPitchSteer(const BikeParameters<T> & b, int maxIterations,
+                          T LeanPitchSteer[3])
 {
   T n[3], mag;
   FrontContactHeightGradient(LeanPitchSteer, b, n);
@@ -88,12 +88,18 @@ void RefineLeanPitchSteer(const BikeParameters<T> & b, const int maxIterations,
   n[1] = std::fabs(n[1]/mag);
   n[2] = std::fabs(n[2]/mag);
 
+  // Index of largest component of gradient, which is taken to be the
+  // independent variable that is solved for via Newton-Raphson
   int index = 0;
   if (n[1] > n[index])
     index = 1;
   if (n[2] > n[index])
     index = 2;
 
-}
+  do {
+    FrontContactHeightGradient(LeanPitchSteer, b, n);
+    LeanPitchSteer[index] -= FrontContactHeight(LeanPitchSteer, b) / n[index];
+  } while (--maxIterations);
+} // RefineLeanPitchSteer()
 
 #endif // BIKEHOLONOMIC_PRIV_H
