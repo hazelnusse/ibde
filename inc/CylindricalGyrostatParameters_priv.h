@@ -1,0 +1,10 @@
+#ifndef CYLINDRICALGYROSTATPARAMETERS_PRIV_H
+#define CYLINDRICALGYROSTATPARAMETERS_PRIV_H
+
+template <class T>
+void CylindricalGyrostatParameters<T>::Validate()
+{
+
+}
+
+#endif // CYLINDRICALGYROSTATPARAMETERS_PRIV_H
