@@ -25,7 +25,7 @@ vtkIsosurfaceWidget::vtkIsosurfaceWidget(BikeParameters<double> & bike, QWidget 
   // Create the zero isosurface
   contourFilter = vtkSmartPointer<vtkContourFilter>::New();
   contourFilter->SetInputConnection(sampleFunction->GetOutputPort());
-  contourFilter->Update();// needed?
+  contourFilter->Update();
   RefineConfigurationSurface();
 
   // Map the contours to graphical primitives
@@ -71,18 +71,12 @@ void vtkIsosurfaceWidget::RefineConfigurationSurface()
 {
   vtkPoints * const points = contourFilter->GetOutput()->GetPoints();
   const vtkIdType N = points->GetNumberOfPoints();
-//  double max = 0.0;
   for (vtkIdType i = 0; i < N; ++i) {
     double lps[3];
-//    double h;
     points->GetPoint(i, lps);
-    RefineLeanPitchSteer(bike_, 7, lps);
+    RefineLeanPitchSteer(bike_, 7, lps);  // Newton-Raphson refinement
     points->SetPoint(i, lps);
-//    h = std::fabs(FrontContactHeight(lps, bike_)); 
-//    if (h > max)
-//      max = h;
-  }
-//  std::cout << "Configuration surface updated.  Max height: " << max << std::endl;
+  } // for i
 } // RefineConfigurationSurface()
 
 void vtkIsosurfaceWidget::UpdateConfigurationSurface()
@@ -92,7 +86,7 @@ void vtkIsosurfaceWidget::UpdateConfigurationSurface()
   sampleFunction->SetModelBounds(-M_PI/2.0, M_PI/2.0, pitchbounds[0], pitchbounds[1], -M_PI, M_PI);
   sampleFunction->Modified();
   configurationSurface->Modified();
-  contourFilter->Update();// needed?
+  contourFilter->Update();
   RefineConfigurationSurface();
   renderWindow->Render();
 } // UpdateConfigurationSurface()

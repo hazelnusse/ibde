@@ -1,28 +1,9 @@
+- Connect Meijaard parameter widget so it's functionality can be used like the
+  default gyrostat parameter widget.
 
 Implement algorithm to compute steady turning quantities:
 
 - Use VTK's level surface functionality to obtain configuration manifold
-  -- split lean/pitch/steer into 8 sections
-    -- lean -pi/2 to pi/2
-    -- pitch -?? to ??
-    -- steer -pi to pi
-  -- for each point obtained from vtk's contouring,
-    -- use Newton-Raphson to solve holonomic constraint to machine precision,
-       by moving along surface normal direction.  The distance to move is
-       upper bounded by the diagonal of the box.  The problem should be
-       possible to set up as finding a root of a single variable function:
-
-       g(alpha) = lps_vtk + alpha*grad(f_holonomic)_(lps_vtk)
-
-       In this setup, lps_vtk and grad(f_holonomic)_(lps_vtk) are constants
-       (the latter assumed to have unit lenght), and the algorithm is a single
-       parameter line search.  The initial guess for alpha should be chosen to
-       be small, probably zero or some very small fraction (<1%) of the diagonal of
-       the box (determined by meshing of lean, pitch and steer).  The points
-       that VTK determines are linear interpolations and should provide a very
-       good approximation of where the configuration surface is, so an initial
-       guess of alpha=0 should converge.
-
     -- with refined point on holonomic surface, compute the following
        quantities
          -- constraint matrix B from B(q)*u = 0

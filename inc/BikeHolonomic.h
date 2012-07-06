@@ -1,10 +1,9 @@
 #ifndef BIKEHOLONOMIC_H
 #define BIKEHOLONOMIC_H
-#include <array>
 #include "BikeParameters.h"
 
 template <class T>
-T FrontContactHeight(const T lps[3], const BikeParameters<T> & b);
+T FrontContactHeight(const T LeanPitchSteer[3], const BikeParameters<T> & b);
 
 template <class T>
 void FrontContactHeightGradient(const T LeanPitchSteer[3], const BikeParameters<T> & b, T gradient[3]);

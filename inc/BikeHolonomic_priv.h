@@ -4,12 +4,12 @@
 #include <cmath>
 
 template <class T>
-T FrontContactHeight(const T lean_pitch_steer[3], const BikeParameters<T> & bike)
+T FrontContactHeight(const T LeanPitchSteer[3], const BikeParameters<T> & bike)
 {
   using std::sin; using std::cos;
-  const T q1 = lean_pitch_steer[0],
-          q2 = lean_pitch_steer[1],
-          q3 = lean_pitch_steer[2],
+  const T q1 = LeanPitchSteer[0],
+          q2 = LeanPitchSteer[1],
+          q3 = LeanPitchSteer[2],
           a_r = bike.rear.a,
           b_r = bike.rear.b,
           g_r = bike.rear.g,
@@ -24,12 +24,12 @@ T FrontContactHeight(const T lean_pitch_steer[3], const BikeParameters<T> & bike
 } // FrontContactHeight()
 
 template <class T>
-void FrontContactHeightGradient(const T lean_pitch_steer[3], const BikeParameters<T> & bike, T gradient[3])
+void FrontContactHeightGradient(const T LeanPitchSteer[3], const BikeParameters<T> & bike, T gradient[3])
 {
   using std::sin; using std::cos;
-  const T q1 = lean_pitch_steer[0],
-          q2 = lean_pitch_steer[1],
-          q3 = lean_pitch_steer[2],
+  const T q1 = LeanPitchSteer[0],
+          q2 = LeanPitchSteer[1],
+          q3 = LeanPitchSteer[2],
           a_r = bike.rear.a,
           b_r = bike.rear.b,
           g_r = bike.rear.g,
